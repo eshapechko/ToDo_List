@@ -1,20 +1,29 @@
+import { useDispatch } from "react-redux";
 import classes from "./Header.module.scss";
-import { NavLink } from "react-router-dom";
+import { ButtonBlock, HeaderBlock, HeaderBlockContainer, HeaderButton, HeaderLink } from "./Header.styled";
+import { toggleThemeAction } from "../../feature/themeReducer";
 
 export const Header = () => {
+    const dispatch = useDispatch();
+
     const getActiveClass = ({ isActive }: { isActive: boolean }): string => {
         return isActive ? `${classes.active} ${classes.link}` : classes.link;
     };
     return (
-        <header className={classes.header}>
-            <div className={classes.container}>
-                <NavLink to="/" className={getActiveClass}>
+        <HeaderBlock>
+            <HeaderBlockContainer>
+                <HeaderLink to="/" className={getActiveClass}>
                     ToDo
-                </NavLink>
-                <NavLink to="/list" className={getActiveClass}>
+                </HeaderLink>
+
+                <HeaderLink to="/list" className={getActiveClass}>
                     List
-                </NavLink>
-            </div>
-        </header>
+                </HeaderLink>
+
+                <ButtonBlock>
+                    <HeaderButton onClick={() => dispatch(toggleThemeAction())}>Change Theme</HeaderButton>
+                </ButtonBlock>
+            </HeaderBlockContainer>
+        </HeaderBlock>
     );
 };
